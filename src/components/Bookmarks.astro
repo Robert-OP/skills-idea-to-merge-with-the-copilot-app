@@ -53,13 +53,20 @@
     STORAGE_KEY,
   } from '../utils/bookmarks.js';
 
-  const form = document.getElementById('add-bookmark');
-  const input = document.getElementById('url');
-  const bookmarkList = document.getElementById('bookmark-list');
-  const emptyState = document.getElementById('empty-state');
-  const listHeader = document.getElementById('list-header');
-  const bookmarkCount = document.getElementById('bookmark-count');
-  const status = document.getElementById('bookmark-status');
+  function getRequiredElement<T extends HTMLElement>(selector: string): T {
+    const element = document.querySelector<T>(selector);
+    if (!element) throw new Error(`Missing bookmark manager element: ${selector}`);
+    return element;
+  }
+
+  const form = getRequiredElement<HTMLFormElement>('#add-bookmark');
+  const input = getRequiredElement<HTMLInputElement>('#url');
+  const bookmarkList = getRequiredElement<HTMLUListElement>('#bookmark-list');
+  const emptyState = getRequiredElement<HTMLParagraphElement>('#empty-state');
+  const listHeader = getRequiredElement<HTMLDivElement>('#list-header');
+  const bookmarkCount = getRequiredElement<HTMLParagraphElement>('#bookmark-count');
+  const status = getRequiredElement<HTMLParagraphElement>('#bookmark-status');
+  const clearAll = getRequiredElement<HTMLButtonElement>('#clear-all');
 
   function readBookmarks() {
     try {
@@ -71,7 +78,7 @@
 
   let bookmarks = readBookmarks();
 
-  function setStatus(message) {
+  function setStatus(message: string) {
     status.textContent = message;
   }
 
@@ -148,7 +155,7 @@
     }
   });
 
-  document.getElementById('clear-all').addEventListener('click', () => {
+  clearAll.addEventListener('click', () => {
     if (bookmarks.length === 0 || !window.confirm('Clear all saved bookmarks?')) return;
 
     bookmarks = [];
