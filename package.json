@@ -10,9 +10,15 @@
     "dev": "astro dev --host --port 4321",
     "start": "astro dev --host --port 4321",
     "build": "astro build",
-    "preview": "astro preview --host --port 4321"
+    "preview": "astro preview --host --port 4321",
+    "test": "node --test",
+    "check": "astro check"
   },
   "dependencies": {
     "astro": "^7.4.12"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "typescript": "^6.0.3"
   }
 }
